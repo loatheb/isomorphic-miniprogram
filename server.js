@@ -1,0 +1,20 @@
+const koa = require('koa')
+const http = require('http')
+const logger = require('koa-logger')
+const serve = require('koa-static')
+const socketBuilder = require('./src/socket')
+const router = require('./src/router')
+const { notifyError } = require('./src/middleware')
+const app = new koa()
+const server = http.createServer(app.callback())
+const socket = socketBuilder(server)
+
+app.use(logger())
+app.use(serve(`${__dirname}/public`))
+app.use(router.routes())
+app.use(router.allowedMethods())
+app.use(notifyError(socket))
+
+app.listen(8888, () => {
+  console.log('listening 8888')
+})
