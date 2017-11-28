@@ -1,4 +1,4 @@
-import fs from 'fs'
+import * as fs from 'fs'
 import merge from 'merge'
 import parallel from 'node-parallel'
 

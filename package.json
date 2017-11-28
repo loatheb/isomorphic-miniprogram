@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon ts-node server.ts",
-    "build": "webpack"
+    "dev": "nodemon -w src -x ts-node index.ts",
+    "build": "tsc"
   },
   "keywords": [
     "miniprogram",

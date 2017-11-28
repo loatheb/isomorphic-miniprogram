@@ -1,8 +1,8 @@
-import koa from 'koa'
-import logger from 'koa-logger'
-import serve from 'koa-static'
-import getPort from 'get-port'
-import router from './router'
+import * as koa from 'koa'
+import * as logger from 'koa-logger'
+import * as serve from 'koa-static'
+import * as getPort from 'get-port'
+import * as router from './router'
 import { notifyError } from './middleware'
 import { dummy } from './utils'
 import { DEFAULT_PORT } from './config'
@@ -25,4 +25,6 @@ export const createServer = (defaultPort: number = DEFAULT_PORT, cb: Function = 
   }
 }
 
-export default createServer()
+export default createServer(3000, function (port) {
+  console.log(port)
+})

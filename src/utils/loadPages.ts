@@ -1,14 +1,14 @@
-const fs = require('fs')
+import * as fs from 'fs'
 const parallel = require('node-parallel')
 
 module.exports = function (pages) {
   const work = parallel()
   const res = {}
-  return function(resolve) {
+  return function (resolve) {
     pages.forEach(page => {
       const file = `${page}.json`
       work.add(cb => {
-        fs.stat(file, function(err, stat) {
+        fs.stat(file, function (err, stat) {
           if (stat && stat.isFile()) {
             fs.readFile(file, 'utf8', (err, content) => {
               if (err) return cb()

@@ -1,5 +1,6 @@
-const router = require('koa-router')
-const { loadConfig, loadTemplate, loadStaticFile, loadPages, getIp } = require('./utils')
+import router from 'koa-router'
+import { loadConfig, loadTemplate, loadStaticFile, loadPages, getIp } from './utils'
+
 const app = router()
 
 process.chdir('build')
@@ -54,4 +55,4 @@ app.get('/:appType/app/(.*)', async ctx => {
   }
 })
 
-module.exports = app
+export default app
