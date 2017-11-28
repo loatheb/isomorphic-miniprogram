@@ -1,9 +1,9 @@
 const ni = require('os').networkInterfaces()
 
-const getIp = function() {
-  let ipAddress = []
-  for (let key in ni) {
-    for (let index in ni[key]) {
+const getIp = function () {
+  const ipAddress = []
+  for (const key in ni) {
+    for (const index in ni[key]) {
       if (ni[key][index].family === 'IPv4' && !ni[key][index].internal) {
         ipAddress.push(ni[key][index].address)
       }
@@ -11,12 +11,14 @@ const getIp = function() {
   }
   if (ipAddress.length >= 1) {
     return ipAddress[0]
-  } else {
-    return '127.0.0.1'
   }
+  return '127.0.0.1'
 }
 
-module.exports = {
+export const dummy = function dummy() {}
+
+export default {
+  dummy,
   getIp,
   loadConfig: require('./loadConfig'),
   loadTemplate: require('./loadTemplate'),
