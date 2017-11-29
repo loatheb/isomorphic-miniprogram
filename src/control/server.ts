@@ -2,6 +2,7 @@ import * as Koa from 'koa'
 import * as logger from 'koa-logger'
 import * as serve from 'koa-static'
 import * as Router from 'koa-router'
+import * as Pug from 'koa-pug'
 import * as routes from './routes'
 
 function dummy() {}
@@ -22,7 +23,15 @@ export class Server {
     this.app.listen(this.port, successCb(this.port, this.counts))
     this.app.on('error', e => errorCb(e, this.port, this.counts))
 
+    this.config()
     this.routes()
+  }
+
+  private config(): void {
+    const pug = new Pug({
+      viewPath: 'src/view',
+    })
+    pug.use(this.app)
   }
 
   private routes(): void {

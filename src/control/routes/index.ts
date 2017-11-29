@@ -1,4 +1,4 @@
-import { Context, Middleware } from 'koa'
+import { Context } from 'koa'
 
 module Route {
   export class Index {
@@ -8,9 +8,10 @@ module Route {
     }
   }
   export class HeartBeat {
-    public async index(ctx: Context) {
-      ctx.body = 'heartbeat'
-      ctx.type = 'text/html'
+    public async index(ctx: Context | any) {
+      await ctx.render('index.pug', {
+        content: 'HeartBeat',
+      })
     }
   }
 }
