@@ -1,10 +1,26 @@
 {
-  "types": ["node"],
   "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@": [
+        "*",
+        "src/*"
+      ]
+    },
+    "module": "commonjs",
+    "outDir": "dist",
     "lib": [
       "es2015",
       "es2016"
     ],
+    "types": ["node"],
     "target": "es2015"
-  }
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
 }

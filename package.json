@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon -w src -x ts-node index.ts",
+    "dev": "nodemon -w src -x ts-node src/index.ts",
     "build": "tsc"
   },
   "keywords": [
@@ -29,10 +29,11 @@
   },
   "devDependencies": {
     "@types/node": "^8.0.53",
-    "tslint": "^5.8.0",
-    "tslint-config-airbnb": "^5.4.2",
+    "@types/koa": "^2.0.41",
     "nodemon": "^1.12.1",
     "ts-node": "^3.3.0",
+    "tslint": "^5.8.0",
+    "tslint-config-airbnb": "^5.4.2",
     "typescript": "^2.6.2"
   }
 }
