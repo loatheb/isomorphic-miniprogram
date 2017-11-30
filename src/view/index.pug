@@ -3,7 +3,7 @@ extends ./template/layout.pug
 block scripts
   script(src="/script/recorder.js")
   script.
-    var config = !{JSON.stringify(config)}
+    var __wxConfig__ = !{JSON.stringify(config)}
 
 block content
   audio#audio(type='audio/mp3', style='display:none;')
