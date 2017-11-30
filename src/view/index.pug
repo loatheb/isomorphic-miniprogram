@@ -1,6 +1,16 @@
 extends ./template/layout.pug
 
-block content
-
+block scripts
+  script(src="/script/recorder.js")
   script.
     var config = !{JSON.stringify(config)}
+
+block content
+  audio#audio(type='audio/mp3', style='display:none;')
+  audio#background-audio(type='audio/mp3', style='display:none;')
+  #app
+  .head
+  .scrollable
+  .tabbar-root(class='{{if config.topBar}}tabbar-root-top{{/}}')
+
+  script(src='/script/build.js?v={{= config.version}}')

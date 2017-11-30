@@ -4,6 +4,7 @@ import * as serve from 'koa-static'
 import * as Router from 'koa-router'
 import * as Pug from 'koa-pug'
 import * as routes from './routes'
+import * as path from 'path'
 
 function dummy() {}
 
@@ -48,5 +49,6 @@ export class Server {
 
     this.app.use(router.routes())
     this.app.use(router.allowedMethods())
+    this.app.use(serve(path.resolve(__dirname, '../../public')))
   }
 }
