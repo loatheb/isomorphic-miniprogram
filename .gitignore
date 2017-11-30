@@ -4,3 +4,4 @@ build/
 src/*.js
 src/**/*.js
 dist
+blog

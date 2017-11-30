@@ -1,4 +1,6 @@
 extends ./template/layout.pug
 
 block content
-  h1= content
+
+  script.
+    var config = !{JSON.stringify(config)}

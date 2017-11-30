@@ -30,6 +30,7 @@ export class Server {
   private config(): void {
     const pug = new Pug({
       viewPath: 'src/view',
+      noCache: true,
     })
     pug.use(this.app)
   }
@@ -39,9 +40,11 @@ export class Server {
 
     const index: routes.Index = new routes.Index()
     const heartbeat: routes.HeartBeat = new routes.HeartBeat()
+    const type: routes.Type = new routes.Type()
 
     router.get('/', index.index.bind(index.index))
     router.get('/heartbeat', heartbeat.index.bind(heartbeat.index))
+    router.get('/:type', type.index.bind(type.index))
 
     this.app.use(router.routes())
     this.app.use(router.allowedMethods())

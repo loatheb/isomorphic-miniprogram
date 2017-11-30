@@ -2,10 +2,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@": [
-        "*",
-        "src/*"
-      ]
+      "src": ["./src"]
     },
     "module": "commonjs",
     "outDir": "dist",
