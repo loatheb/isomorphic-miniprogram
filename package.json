@@ -15,7 +15,10 @@
   "author": "zhang zhao <loatheb.zhao@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
     "bluebird": "^3.5.1",
+    "concat-with-sourcemaps": "^1.0.4",
     "et-improve": "^0.1.3",
     "faye-websocket": "^0.11.1",
     "get-port": "^3.2.0",
@@ -30,6 +33,7 @@
     "node-parallel": "^0.1.6"
   },
   "devDependencies": {
+    "@types/bluebird": "^3.5.18",
     "@types/koa": "^2.0.41",
     "@types/node": "^8.0.53",
     "nodemon": "^1.12.1",
