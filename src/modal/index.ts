@@ -1,6 +1,10 @@
 import * as fs from 'mz/fs'
+import { normalize } from 'path'
 import * as merge from 'merge'
+import * as glob from 'glob'
 import * as parallel from 'node-parallel'
+import * as Concat from 'concat-with-sourcemaps'
+import * as babel from 'babel-core'
 
 const DEFAULT_CONFIG = {
   debug: false,
@@ -109,4 +113,98 @@ export function loadConfigByType(type) {
 
 export function loadJSONfiles(name) {
   return fs.readFile(`${name}.json`, 'utf-8')
+}
+
+export function globJSfiles(type) {
+  return new Promise((resolve, reject) => {
+    glob('**/*.js', {
+      ignore: 'node_modules/**/*.js',
+    },   (err, files) => {
+      if (err) return reject(err)
+      resolve(files.map(normalize))
+    })
+  })
+}
+
+export function groupFiles(files, config, type) {
+  const pages = config.pages.map((page) => {
+    return `${type}/${page}.js`
+  })
+  const utils = []
+  const routes = []
+  files.forEach((file) => {
+    if (pages.indexOf(file) === -1 && file !== 'app.js') {
+      utils.push(file)
+    }
+  })
+
+  pages.forEach((page) => {
+    if (files.indexOf(page) === -1) {
+      console.log(` ✗ ${page} not found`)
+    } else {
+      routes.push(page)
+    }
+  })
+  return [utils, routes]
+}
+
+export function concatFiles(obj, pages) {
+  const concat = new Concat(true, 'service.js', '\n')
+  for (const item of obj) {
+
+    const path = item.path
+    const route = path.replace(/\.js$/, '')
+    const isPage = pages.indexOf(route) !== -1
+    if (!isPage) {
+      concat.add(item.path, item.code, item.map)
+    } else {
+      concat.add(null, `var __wxRoute = "${route}", __wxRouteBegin = true;`)
+      concat.add(item.path, item.code, item.map)
+    }
+  }
+  console.log(' ✓ service.js build success')
+  return `${concat.content}\n`
+}
+
+export function parseJavascript(config, fullPath) {
+  return new Promise((resolve, reject) => {
+    const isModule = fullPath !== 'app.js' && config.pages.indexOf(fullPath.replace(/\.js$/, '')) === -1
+    loadJavascript(fullPath, config.babel, (err, result) => {
+      if (err) return reject(err)
+      const concat = new Concat(true, fullPath, '\n')
+      concat.add(
+        null,
+        `define("${fullPath}", function(require, module, exports,
+           window,document,frames,self,location,navigator,localStorage,
+          history,Caches,screen,alert,confirm,prompt,fetch,
+          XMLHttpRequest,WebSocket,webkit,WeixinJSCore,WeixinJSBridge,Reporter){`)
+      concat.add(fullPath, result.code, result.map)
+      concat.add(null, '});' + (isModule ? '' : `require("${fullPath}")`))
+      return resolve(concat.content)
+    })
+  })
+}
+
+export function loadJavascript(fullPath, useBabel, cb) {
+  if (useBabel) {
+    babel.transformFile(fullPath, {
+      presets: ['babel-preset-es2015'].map(require.resolve),
+      sourceMaps: true,
+      sourceFileName: fullPath,
+      babelrc: false,
+      ast: false,
+      resolveModuleSource: false,
+    },                  (err, result) => {
+      if (err) return cb(err)
+      cb(null, result)
+    })
+  } else {
+    fs.readFile(fullPath, 'utf8', (err, content) => {
+      if (err) return cb(err)
+      cb(null, {
+        code: content,
+        map: null,
+      })
+    })
+  }
 }
