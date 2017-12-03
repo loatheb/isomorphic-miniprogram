@@ -2,19 +2,21 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "src": ["./src"]
+      "src": ["./src"],
+      "client": ["./client"]
     },
     "module": "commonjs",
     "outDir": "dist",
     "lib": [
       "es2015",
-      "es2016"
+      "es2016",
+      "dom"
     ],
     "types": ["node"],
     "target": "es2015"
   },
   "include": [
-    "src/**/*.ts"
+    "client/**/*.ts"
   ],
   "exclude": [
     "node_modules",

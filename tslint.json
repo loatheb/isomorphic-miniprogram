@@ -3,9 +3,14 @@
   "extends": [
     "tslint-config-airbnb"
   ],
+  "globals": {
+    "__wxConfig__": true
+  },
   "rules": {
     "semicolon": [true, "never"],
     "import-name": false,
-    "max-line-length": [true, "120"]
+    "max-line-length": [true, "120"],
+    "align": false,
+    "function-name": false
   }
 }
