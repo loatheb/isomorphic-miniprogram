@@ -43,6 +43,7 @@ export class Server {
     const heartbeat: routes.HeartBeat = new routes.HeartBeat()
     const type = new routes.type()
 
+    router.get('/favicon', dummy)
     router.get('/', index.index.bind(index.index))
     router.get('/heartbeat', heartbeat.index.bind(heartbeat.index))
     router.get('/:type', type.index.bind(type.index))

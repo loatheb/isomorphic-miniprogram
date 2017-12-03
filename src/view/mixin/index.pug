@@ -1,0 +1,31 @@
+mixin reset(type)
+  +ua(type)
+  +resetEvents
+  +resetConsole
+
+mixin ua(type)
+  script.
+    !(function() {
+      var ua = navigator.userAgent
+      Object.defineProperty(navigator, 'userAgent', {
+        get: function () { return ua + ' #{type} appservice webview/10000' }
+      })
+    })()
+
+mixin resetEvents
+  script.
+    document.addEventListener('touchstart', function () {})
+    document.addEventListener('touchend', function () {})
+    document.addEventListener('touchmove', function () {})
+    document.addEventListener('touchcancel', function () {})
+    document.addEventListener('focus', function () {})
+    document.addEventListener('blur', function () {})
+
+mixin resetConsole
+  script.
+    Object.defineProperty(console, 'warn', {
+      get : function () { return function () {} }
+    })
+    Object.defineProperty(console, 'debug', {
+      get : function () { return function () {} }
+    })

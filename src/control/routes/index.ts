@@ -8,7 +8,6 @@ module Route {
     public async index(ctx: Context, next?: Function) {
       ctx.body = 'Hello world'
       ctx.type = 'text/html'
-      if (next) await next
     }
   }
 
@@ -17,7 +16,6 @@ module Route {
       await ctx.render('index', {
         content: 'HeartBeat',
       })
-      if (next) await next
     }
   }
 }

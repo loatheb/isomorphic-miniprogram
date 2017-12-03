@@ -1,25 +1,21 @@
 extends ./template/layout
+include ./mixin/index
 
-block scripts
+block header_scripts
+  +reset(appname)
   script.
     var __wxConfig = !{JSON.stringify(config)}
-    var __wxAppData = {}
-    var __wxRoute
-    var __wxRouteBegin
-    var __eval = eval
-    global = {}
-    !(function() {
-      var ua = navigator.userAgent
-      Object.defineProperty(navigator, 'userAgent', {
-        get: function () { return ua + ' appservice webview/10000' }
-      })
-    })()
-    script(src='/script/bridge.js?v=#{config.version}', type='text/javascript')
-    script(src='/script/service.js?v=#{config.version}', type='text/javascript')
-    script(src='/#{appname}/service.js', type='text/javascript')
+    var __wxAppData = {};
+    var __wxRoute, __wxRouteBegin, __eval = eval;
+    global = {};
 
-block content
+block footer_scripts
   script.
     window._____sendMsgToNW({
       sdkName: 'APP_SERVICE_COMPLETE'
-    })
+    });
+
+block content
+  script(src='/script/bridge.js?v=#{config.version}', type='text/javascript')
+  script(src='/script/baseService.js?v=#{config.version}', type='text/javascript')
+  script(src=`/${appname}/service.js`, type='text/javascript')

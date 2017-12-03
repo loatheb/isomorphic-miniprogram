@@ -30,13 +30,15 @@ export default class Type {
     const config: any = await loadConfigByType(type)
     const files = await globJSfiles(type)
     const [utils, routes] = groupFiles(files, config, type)
+
     const paths = utils.concat(`${type}/app.js`, routes)
     const result = await Promise.all(paths.map(path => parseJavascript(config, path)))
     const obj = paths.map((path, i) => {
       return { path, code: result[i] }
     })
     const { pages } = config
+    const { headers } = ctx.request
     ctx.body = concatFiles(obj, pages)
-    ctx.set('Content-Type', 'javascript')
+    ctx.set('Content-Type', 'application/javascript; charset=utf-8')
   }
 }

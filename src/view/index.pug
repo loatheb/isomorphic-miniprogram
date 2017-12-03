@@ -1,9 +1,14 @@
-extends ./template/layout.pug
+extends ./template/layout
+include ./mixin/index
 
-block scripts
-  script(src="/script/recorder.js")
+block header_scripts
+  +reset(appname)
+  script(src='/script/recorder.js')
   script.
     var __wxConfig__ = !{JSON.stringify(config)}
+
+block footer_scripts
+  script(src='/script/build.js?v={{= config.version}}')
 
 block content
   audio#audio(type='audio/mp3', style='display:none;')
@@ -12,5 +17,3 @@ block content
   .head
   .scrollable
   .tabbar-root(class='{{if config.topBar}}tabbar-root-top{{/}}')
-
-  script(src='/script/build.js?v={{= config.version}}')

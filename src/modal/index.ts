@@ -106,6 +106,7 @@ export function loadConfigByType(type) {
             appid,
           },
         })
+        console.log('loadConfigByType', result)
         return resolve(result)
       })
   })
@@ -133,13 +134,13 @@ export function groupFiles(files, config, type) {
   const utils = []
   const routes = []
   files.forEach((file) => {
-    if (pages.indexOf(file) === -1 && file !== 'app.js') {
+    if (!pages.includes(file) && file !== 'app.js') {
       utils.push(file)
     }
   })
 
   pages.forEach((page) => {
-    if (files.indexOf(page) === -1) {
+    if (!files.includes(page)) {
       console.log(` ✗ ${page} not found`)
     } else {
       routes.push(page)
