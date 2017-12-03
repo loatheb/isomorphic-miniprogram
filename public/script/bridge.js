@@ -239,7 +239,17 @@
       g = 0,
       h = function(e) {
         var t = JSON.parse(JSON.stringify(e));
-        t.to = "backgroundjs", t.comefrom = "webframe", t.command = "COMMAND_FROM_ASJS", t.appid = a, t.appname = u, t.apphash = s, t.webviewID = l, t.__id = g, g++, window.parent.postMessage(t, "*")
+        t.to = "backgroundjs",
+        t.comefrom = "webframe",
+        t.command = "COMMAND_FROM_ASJS",
+        t.appid = a,
+        t.appname = u,
+        t.apphash = s,
+        t.webviewID = l,
+        t.__id = g,
+        g++,
+        console.log(typeof window.parent.postMessage)
+        window.parent.postMessage(t, "*")
       },
       _ = function(e) {
         e.command = "COMMAND_FROM_ASJS", e.appid = a, e.appname = u, e.apphash = s, e.webviewID = l;
@@ -263,6 +273,7 @@
     window.addEventListener("message", function(e) {
       var t = e.data,
         n = t.to;
+        console.log(e)
       if ("appservice" === n) return delete n.appservice, "complete" !== document.readyState ? void f.push(t) : void p(t)
     }), window.addEventListener("load", function() {
       f.forEach(function(e) {
